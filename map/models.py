@@ -11,8 +11,14 @@ class Session(models.Model):
     is_completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        db_table = 'sessions'
-
     def __str__(self):
         return self.id
+    
+class SessionPins(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    session = models.ForeignKey("Session", on_delete=models.CASCADE)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    picture = models.ImageField(upload_to='pins/', null=True, blank=True)
+    is_pin = models.BooleanField(default=False)
+    score = models.IntegerField(default=0, null=False)
