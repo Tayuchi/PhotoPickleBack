@@ -14,11 +14,11 @@ class Session(models.Model):
     def __str__(self):
         return self.id
     
-class SessionPins(models.Model):
+class SessionPin(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     session = models.ForeignKey("Session", on_delete=models.CASCADE)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    picture = models.ImageField(upload_to='pins/', null=True, blank=True)
+    picture = models.ImageField(null=True, blank=True)
     is_pin = models.BooleanField(default=False)
     score = models.IntegerField(default=0, null=False)
