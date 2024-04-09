@@ -22,3 +22,6 @@ class SessionPin(models.Model):
     picture = models.ImageField(null=True, blank=True)
     is_pin = models.BooleanField(default=False)
     score = models.IntegerField(default=0, null=False)
+
+    def __self__(self):
+        return self.id
