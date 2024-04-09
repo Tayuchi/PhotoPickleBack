@@ -17,8 +17,8 @@ class Session(models.Model):
 class SessionPin(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     session = models.ForeignKey("Session", on_delete=models.CASCADE)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    latitude = models.DecimalField(max_digits=18, decimal_places=15)
+    longitude = models.DecimalField(max_digits=18, decimal_places=15)
     picture = models.ImageField(null=True, blank=True)
     is_pin = models.BooleanField(default=False)
     score = models.IntegerField(default=0, null=False)
