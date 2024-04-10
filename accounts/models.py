@@ -6,11 +6,11 @@ import uuid
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
+    def create_user(self, email, password=None):
         if not email:
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username)
+        user = self.model(email=email)
         user.set_password(password)
         user.save()
         return user
@@ -22,7 +22,7 @@ class CustomUserManager(BaseUserManager):
         user.save()
         return user
     
-class User(AbstractUser, PermissionsMixin):
+class UserAccount(AbstractUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_('email address'), unique=True, blank=False, null=False, max_length=256)
     nickname = models.CharField(max_length=256 ,blank=False, null=False)
