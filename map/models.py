@@ -9,6 +9,7 @@ class Session(models.Model):
     share_id = models.UUIDField(default=uuid.uuid4, editable=False)
     is_completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    
     # event = models.ForeignKey('Event', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -22,6 +23,7 @@ class SessionPin(models.Model):
     picture = models.ImageField(null=True, blank=True)
     is_pin = models.BooleanField(default=False)
     score = models.IntegerField(default=0, null=False)
+
 
     def __self__(self):
         return self.id

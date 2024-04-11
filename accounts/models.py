@@ -24,8 +24,8 @@ class CustomUserManager(BaseUserManager):
     
 class UserAccount(AbstractUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(_('email address'), unique=True, blank=False, null=False, max_length=256)
-    nickname = models.CharField(max_length=256 ,blank=False, null=False)
+    email = models.EmailField(_('email address'), unique=True, blank=False, null=False, max_length=255)
+    nickname = models.CharField(max_length=255 ,blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     
     is_active = models.BooleanField(default=True)
@@ -33,6 +33,20 @@ class UserAccount(AbstractUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     objects = CustomUserManager()
+
+    groups = models.ManyToManyField(
+        "auth.Group",
+        related_name="useraccount_set",
+        blank=True,
+        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups."
+    )
+
+    user_permissions = models.ManyToManyField(
+        "auth.Permission",
+        related_name="useraccount_set",
+        blank=True,
+        help_text="Specific permissions for this user."
+    )
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
