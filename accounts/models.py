@@ -15,17 +15,17 @@ class CustomUserManager(BaseUserManager):
         user.save()
         return user
     
-    def create_superuser(self, email, username, password=None):
-        user = self.create_user(email, username, password)
+    def create_superuser(self, email, password=None):
+        user = self.create_user(email, password)
         user.is_staff = True
         user.is_superuser = True
         user.save()
         return user
     
 class UserAccount(AbstractUser, PermissionsMixin):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_('email address'), unique=True, blank=False, null=False, max_length=255)
-    nickname = models.CharField(max_length=255 ,blank=False, null=False)
+    nickname = models.CharField(max_length=255 ,blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     is_active = models.BooleanField(default=True)
