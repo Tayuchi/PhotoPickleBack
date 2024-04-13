@@ -6,17 +6,17 @@ import uuid
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email, nickname, password=None):
         if not email:
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
-        user = self.model(email=email)
+        user = self.model(email=email, nickname=nickname)
         user.set_password(password)
         user.save()
         return user
     
-    def create_superuser(self, email, password=None):
-        user = self.create_user(email, password)
+    def create_superuser(self, email, nickname, password=None):
+        user = self.create_user(email, nickname, password)
         user.is_staff = True
         user.is_superuser = True
         user.save()
@@ -25,7 +25,7 @@ class CustomUserManager(BaseUserManager):
 class UserAccount(AbstractUser, PermissionsMixin):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_('email address'), unique=True, blank=False, null=False, max_length=255)
-    nickname = models.CharField(max_length=255 ,blank=True, null=True)
+    nickname = models.CharField(max_length=255 ,blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     
     is_active = models.BooleanField(default=True)
@@ -49,7 +49,7 @@ class UserAccount(AbstractUser, PermissionsMixin):
     )
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["nickname"]
     
     def __str__(self):
         return self.email
