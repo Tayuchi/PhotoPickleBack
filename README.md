@@ -1,2 +1,1 @@
-# PhotoPickle-Python
-Backend(Python) of PhotoPickle
+# Backend(Python) of PhotoPickle
