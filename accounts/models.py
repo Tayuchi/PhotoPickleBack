@@ -23,7 +23,7 @@ class CustomUserManager(BaseUserManager):
         return user
     
 class UserAccount(AbstractUser, PermissionsMixin):
-    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     email = models.EmailField(_('email address'), unique=True, blank=False, null=False, max_length=255)
     nickname = models.CharField(max_length=255 ,blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
