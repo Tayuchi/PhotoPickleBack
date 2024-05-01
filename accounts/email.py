@@ -25,7 +25,7 @@ class ActivationEmail(EmailManager):
     def get_context_data(self):
         context = super().get_context_data()
         user = context.get("user")
-        context["name"] = user.name
+        context["name"] = user.nickname
         context["uid"] = utils.encode_uid(user.pk)
         context["token"] = default_token_generator.make_token(user)
         context["url"] = settings.DJOSER["ACTIVATION_URL"].format(**context)
@@ -41,7 +41,7 @@ class ConfirmationEmail(EmailManager):
     def get_context_data(self):
         context = super().get_context_data()
         user = context.get("user")
-        context["name"] = user.name
+        context["name"] = user.nickname
         context["site_name"] = settings.SITE_NAME
         return context
 
@@ -53,7 +53,7 @@ class ForgotPasswordEmail(BaseEmailMessage):
     def get_context_data(self):
         context = super().get_context_data()
         user = context.get("user")
-        context["name"] = user.name
+        context["name"] = user.nickname
         context["uid"] = utils.encode_uid(user.pk)
         context["token"] = default_token_generator.make_token(user)
         context["url"] = settings.DJOSER["PASSWORD_RESET_CONFIRM_URL"].format(**context)
@@ -69,6 +69,6 @@ class ResetPasswordEmail(BaseEmailMessage):
     def get_context_data(self):
         context = super().get_context_data()
         user = context.get("user")
-        context["name"] = user.name
+        context["name"] = user.nickname
         context["site_name"] = settings.SITE_NAME
         return context
